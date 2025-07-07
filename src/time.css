@@ -1,0 +1,13 @@
+.clock{
+  display: flex;
+  font-size: 15rem;
+  font-family: 'Abril Fatface', cursive;
+  color: rgb(28, 13, 109);
+  align-items: center;
+  justify-content: center;
+  height: 100hv;
+  transition: opacity 0.3s ease-in-out;
+}
+.time-updating {
+  opacity: 0.5;
+}
