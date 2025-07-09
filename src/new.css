@@ -1,0 +1,20 @@
+.square {
+  width: 5rem;
+  height: 5rem;
+  position: relative;
+  top: 230px;
+  left: 700px;
+  background-color: black;
+  border: solid;
+  border-color: brown;
+       
+
+  color: beige;
+  align-items: center;
+  justify-content: center;
+}
+
+.container{
+  display: flex;        
+  flex-direction: row;
+}
