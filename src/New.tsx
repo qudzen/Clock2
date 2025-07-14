@@ -14,7 +14,8 @@ function LotsOfSquares() {
 
   const reset = () => {setCount(1)}
 
-  const indexCenter = count / 2
+  console.log(degree, division)
+
 
 
 
@@ -58,15 +59,7 @@ function LotsOfSquares() {
 //  console.log(cellwidth)
      return (
        <>
-
-
-
-
-
-
         <div className='container' onWheel={handlWheel}>{spisok.map(s => (<div className='square' style={{width: cellwidth}}>Привет</div>))}</div>
-
-    
 
         <button onClick={degree}>**2</button>
         <button onClick={division}>/2</button>

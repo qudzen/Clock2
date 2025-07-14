@@ -1,61 +1,96 @@
 import './Vasa.css'
-import { format, subHours, addHours, subMinutes, addMinutes, subSeconds, addSeconds } from 'date-fns'
 import { useEffect, useState } from 'react'
+import { format, addDays, subDays, differenceInSeconds } from 'date-fns'
 
 
 function Vasa() {
+  const [count, setCount] = useState(100000)
+  const [count2, setCount2] = useState(101000)
+  const [raznica, setRaznica] = useState(count2 - count)
 
-  const startDate = new Date('2024-03-01T12:00:00')
-  const [currentTime, setCurrentTime] = useState(startDate);
-
-  const minusHours = () => {setCurrentTime(subHours(currentTime, 1))}
-  const plusHours = () => {setCurrentTime(addHours(currentTime, 1));}
-
-  const minusMinute = () => {setCurrentTime(subMinutes(currentTime, 1))}
-  const plusMinute = () => {setCurrentTime(addMinutes(currentTime, 1));}
-
-  const minusSecond = () => {setCurrentTime(subSeconds(currentTime, 1))}
-  const plusSecond = () => {setCurrentTime(addSeconds(currentTime, 1));}
-
-  const handlWheel = (e) => {
-    if (e.deltaY < 0) {
-      plusSecond();
-    } else {
-      minusSecond();
+  useEffect(() => {
+    if ((count2 - count) > 1){
+      setRaznica(count2 - count);
     }
-  }
-
-  const [newCurrentTime, setNewCurrentTime] = useState(startDate)
-  const minusHours2 = () => {setNewCurrentTime(subHours(newCurrentTime, 1))}
-  const plusHours2 = () => {setNewCurrentTime(addHours(newCurrentTime, 1));}
-
-  const minusMinute2 = () => {setNewCurrentTime(subMinutes(newCurrentTime, 1))}
-  const plusMinute2 = () => {setNewCurrentTime(addMinutes(newCurrentTime, 1));}
-
-  const minusSecond2 = () => {setNewCurrentTime(subSeconds(newCurrentTime, 1))}
-  const plusSecond2 = () => {setNewCurrentTime(addSeconds(newCurrentTime, 1));}
-
-  const handlWheel2 = (e) => {
-    if (e.deltaY < 0) {
-      plusSecond2();
-    } else {
-      minusSecond2();
+    else{
+      setRaznica(1)
     }
-  }
+  }, [count, count2]);
+
+  const tapplus = () => {
+//    if ((count + (count - count2) / 2) > 0){
+    const newDifference = ((count2 - count) / 2)
+    const newDifference2 = ((count2 - count) / 2);
+    setCount2(count2 + newDifference); 
+    setCount(count - newDifference2)
+  };
+
+  const tapminus = () => {
+    if (raznica > 1){
+      const newDifference = (count2 - count) / 4;
+      setCount(count + newDifference);
+      setCount2(count2 - newDifference);
+    }
+    else{
+      setRaznica(1)
+    }
+    
+  };
+const [fromDate, setFromdate] = useState(new Date(count))
+const [toDate, setToDate]  = useState(new Date(count2))
+const [raznicaDate, setRaznicaDate] = useState(differenceInSeconds(toDate, fromDate))
+
+useEffect(() => {
+  setFromdate(new Date(count))
+}, [count])
+useEffect(() => {
+  setToDate(new Date(count2))
+}, [count2])
+
+useEffect(() => {
+    if (toDate > fromDate){
+      setRaznicaDate(differenceInSeconds(toDate, fromDate));
+    }
+  }, [toDate, fromDate]);
+
+const Wheelll = (e) => {
+  if (e.deltaY < 0) {
+      tapplus();
+    } else {
+      tapminus();
+    }
+}
+
+ 
+  
 
   return (
     <>
       
+      <div className='container'>
+        <div className='count2'>
+          {count}
+        </div>
 
-      <div className='clock2' onWheel={handlWheel}>
-        {format(currentTime, 'HH.mm.ss')}
+        <div className='raznica' onWheel={Wheelll}>
+          {raznica}
+        
+        </div>
+
+        <div className='count3'>
+          {count2}
+        </div>
       </div>
-      
+      <button onClick={tapplus}>*</button>
+      <button onClick={tapminus}>/</button>
 
 
-      <div className='clock3' onWheel={handlWheel2}>
-        {format(newCurrentTime, 'HH.mm.ss')}
+      <div className='container2'>
+        <div className='count2'>{format(fromDate, 'dd.MM.yyyy HH.mm.ss')}</div>
+        <div className='raznica'>{raznicaDate}</div>
+        <div className='count2'>{format(toDate, 'dd.MM.yyyy HH.mm.ss')}</div>
       </div>
+
       
     </>
   )

@@ -1,0 +1,12 @@
+.square {
+  background-color: black;
+  border: solid;
+  border-color: rgb(0, 255, 85);
+  border-width: 1px
+}
+.containerDiv{
+  display: flex;        
+  flex-direction: row;
+  align-items: center;
+  justify-content: center;
+}
